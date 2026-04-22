@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Othello Antigravity - 經典黑白棋</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="game-layout">
+            <!-- 左側功能區 -->
+            <aside class="side-panel left">
+                <div class="score-badge black-badge">
+                    <span class="label">黑棋</span>
+                    <span id="black-score" class="score">2</span>
+                </div>
+                <div class="primary-btn logo-btn">
+                    OTHELLO
+                </div>
+            </aside>
+
+            <!-- 中央棋盤區 -->
+            <main class="board-area">
+                <div class="game-container">
+                    <div id="board"></div>
+                </div>
+            </main>
+
+            <!-- 右側功能區 -->
+            <aside class="side-panel right">
+                <div class="score-badge white-badge">
+                    <span class="label">白棋</span>
+                    <span id="white-score" class="score">2</span>
+                </div>
+                <button id="reset-main-btn" class="primary-btn reset-btn">
+                    重新開始 (R)
+                </button>
+            </aside>
+        </div>
+    </div>
+
+
+    <!-- 遊戲結束彈窗 -->
+    <div id="game-over-overlay" class="overlay">
+        <h2 id="winner-title">勝利者</h2>
+        <div id="result-text">黑棋 32 : 白棋 32</div>
+        <button id="overlay-reset-btn" class="primary-btn">
+            再玩一次
+        </button>
+    </div>
+
+    <script src="js/logic.js"></script>
+    <script src="js/board.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
