@@ -1,14 +1,21 @@
 :root {
     --bg-color: #0f172a;
-    --board-color: #1e293b;
-    --cell-color: #334155;
+    --board-color: #b6ad9a; /* 厚實的高級石材/木質框架感 */
+    --cell-color: #e2d8c3; /* 拿鐵色 / 淺卡其 (Latte Stone) */
     --accent-emerald: #10b981;
     --accent-blue: #3b82f6;
+    --accent-hint: #2563eb; /* 深藍色提示 */
     --text-primary: #f8fafc;
-    --white-piece: linear-gradient(145deg, #ffffff, #e2e8f0);
-    --black-piece: linear-gradient(145deg, #1e293b, #111827);
-    --hint-color: rgba(16, 185, 129, 0.4);
+    --white-piece: radial-gradient(circle at 30% 30%, #ffffff, #f8fafc 80%, #f1f5f9);
+    --black-piece: radial-gradient(circle at 35% 35%, #57534e, #1c1917 85%, #000000);
+    --hint-color: rgba(37, 99, 235, 0.2); /* 專業洗練的淡藍色提示 */
 }
+
+
+
+
+
+
 
 * {
     margin: 0;
@@ -24,6 +31,7 @@ body {
     background-color: var(--bg-color);
     color: var(--text-primary);
     height: 100vh;
+    height: 100dvh;
     width: 100vw;
     display: flex;
     justify-content: center;
@@ -31,20 +39,21 @@ body {
     padding: 0;
     margin: 0;
     overflow: hidden; 
-    touch-action: none; /* 禁止大螢幕觸控手勢干擾遊戲 */
+    touch-action: none; 
 }
 
 
 .app-container {
     width: 100%;
     height: 100%;
-    max-width: 1300px;
+    max-width: 1400px; /* 稍微增加寬度上限以應對 4K */
     display: flex;
     flex-direction: column;
-    justify-content: center; /* 垂直置中 */
+    justify-content: center;
     align-items: center;
     gap: 10px;
     padding: 2vh;
+    overflow: hidden; /* 確保容器本身不溢出 */
 }
 
 .game-layout {
@@ -69,7 +78,7 @@ body {
     background: var(--board-color);
     padding: min(2vh, 16px);
     border-radius: 20px;
-    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.8); /* 回復到深色陰影 */
     border: 1px solid rgba(255, 255, 255, 0.05);
     position: relative;
     display: flex;
@@ -80,40 +89,41 @@ body {
 
 #board {
     display: grid;
-    /* 同時參考寬度與高度，確保不超出畫面 */
-    grid-template-columns: repeat(8, min(10vw, 8vh, 70px));
-    grid-template-rows: repeat(8, min(10vw, 8vh, 70px));
+    /* 調整比例，確保高度留白足夠 */
+    grid-template-columns: repeat(8, min(10vw, 9vh, 70px));
+    grid-template-rows: repeat(8, min(10vw, 9vh, 70px));
     gap: 2px;
-    background-color: #020617;
-    padding: 4px;
+    background-color: var(--board-color);
+    padding: 6px;
     border-radius: 8px;
 }
 
 
 .cell {
     background-color: var(--cell-color);
-    border-radius: 4px;
+    border-radius: 2px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     position: relative;
     transition: background-color 0.2s ease;
-    touch-action: none; /* 讓棋盤點擊更靈敏，不受縮放延遲影響 */
+    touch-action: none; 
 }
 
 
 .cell:hover {
-    background-color: #475569;
+    background-color: #dcd3bc; /* 懸停時變為稍微深一點的土色/拿鐵色 */
 }
 
+
 .piece {
-    width: 82%;
-    height: 82%;
+    width: 85%;
+    height: 85%;
     border-radius: 50%;
     transform: scale(0);
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.5s;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35); /* 針對中性色調優化陰影 */
 }
 
 .piece.black { 
@@ -124,8 +134,9 @@ body {
 .piece.white { 
     background: var(--white-piece); 
     transform: scale(1); 
-    border: 1px solid rgba(0,0,0,0.1); 
+    border: 1px solid rgba(0,0,0,0.08); 
 }
+
 
 .hint::after {
     content: '';
@@ -133,10 +144,12 @@ body {
     height: 25%;
     background-color: var(--hint-color);
     border-radius: 50%;
-    border: 1.5px solid var(--accent-emerald);
-    box-shadow: 0 0 10px var(--accent-emerald);
+    border: 1.5px solid var(--accent-hint);
+    box-shadow: 0 0 10px var(--hint-color);
     animation: pulse 1.5s infinite;
 }
+
+
 
 @keyframes pulse {
     0% { transform: scale(0.9); opacity: 0.6; }
@@ -156,7 +169,7 @@ body {
 }
 
 .score-badge {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.05); /* 回復到深色半透明 */
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
     padding: 12px 24px;
@@ -172,6 +185,7 @@ body {
     color: rgba(255, 255, 255, 0.6);
     margin-bottom: 4px;
 }
+
 
 .score-badge .score {
     font-size: 1.8rem;
@@ -240,21 +254,24 @@ body {
     .game-layout {
         flex-direction: row;
         justify-content: center;
-        align-items: center; /* 改為垂直置中 */
+        align-items: center;
         padding: 0;
-        gap: 3vw; 
-        height: 100%;
+        gap: 4vw; 
+        width: 100%;
+        flex: 1;
+        min-height: 0;
     }
 
     .side-panel {
         flex-direction: column;
         width: auto;
         padding-top: 0; 
-        flex: 1;
+        flex: 0 0 200px; /* 固定寬度，不強佔高度 */
         max-width: 250px;
         justify-content: center;
-        height: 100%;
-        gap: 20px; /* 統一間距 */
+        height: auto;
+        max-height: 100%;
+        gap: 20px; 
     }
 
     .side-panel.left {
@@ -286,9 +303,9 @@ body {
     }
 
     #board {
-        /* 在電腦版同樣限制高度 */
-        grid-template-columns: repeat(8, min(7vw, 10vh, 75px));
-        grid-template-rows: repeat(8, min(7vw, 10vh, 75px));
+        /* 在電腦版嚴格限制高度比例，避免 4K 下過大 */
+        grid-template-columns: repeat(8, min(8vw, 9vh, 85px));
+        grid-template-rows: repeat(8, min(8vw, 9vh, 85px));
     }
 }
 
@@ -310,7 +327,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(15, 23, 42, 0.95);
+    background: rgba(15, 23, 42, 0.95); /* 回復到深色背景 */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -320,6 +337,7 @@ body {
     pointer-events: none;
     transition: opacity 0.5s;
 }
+
 
 .overlay.visible {
     opacity: 1;
